@@ -3,12 +3,15 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Comment from "./comment";
 
+var t, n;
 function CommentBox() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState({ name: "", content: "" });
   const [name, setName] = useState("");
-  const handleOnChange = () => {
+  const handleOnChange = (e) => {
     console.log("commentBox " + name + " " + text);
+    setText({ ...text, [e.target.name]: e.target.value });
   };
   return (
     <div className="App">
@@ -21,8 +24,10 @@ function CommentBox() {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Control
                 type="name"
+                name="name"
+                value={text.name}
                 placeholder="Name..."
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleOnChange}
               />
             </Form.Group>
             <Form.Group
@@ -32,14 +37,16 @@ function CommentBox() {
               <Form.Control
                 as="textarea"
                 rows={3}
+                name="content"
+                value={text.content}
                 placeholder="Write a new post..."
-                onChange={(e) => setText(e.target.value)}
+                onChange={handleOnChange}
               />
             </Form.Group>
 
             <Button
               variant="primary"
-              type="submit"
+              type="button"
               onClick={() => handleOnChange()}
             >
               Submit
@@ -47,6 +54,7 @@ function CommentBox() {
           </Form>
         </Card.Body>
       </Card>
+      <Comment handleOnChange={name} />
     </div>
   );
 }

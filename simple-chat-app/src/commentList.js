@@ -3,10 +3,12 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CommentBox from "./commentInput";
 
-function CommentBox() {
+function Comments() {
   return (
     <div className="App">
+      <CommentBox />
       <Card style={{ width: "30rem" }}>
         <Card.Body>
           <Card.Title>name</Card.Title>
@@ -27,4 +29,4 @@ function CommentBox() {
     </div>
   );
 }
-export default CommentBox;
+export default Comments;
