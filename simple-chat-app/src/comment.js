@@ -3,25 +3,55 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-function Comment({ handleOnChange }) {
+var replies = [
+  {
+    text: "Whatever the mind of man can conceive and believe, it can achieve.",
+    name: "Napoleon Hill",
+  },
+  {
+    text: "Strive not to be a success, but rather to be of value.",
+    name: "Albert Einstein",
+  },
+  {
+    text: "I attribute my success to this: I never gave or took any excuse.",
+    name: "Florence Nightingale",
+  },
+  {
+    text: "You miss 100% of the shots you don’t take.",
+    name: "Wayne Gretzky",
+  },
+];
+function Comment(props) {
+  var temp = 1 + Number(props.depth);
+  const replyData = replies.map((each) => (
+    <Comment name={each.name} text={each.text} depth={temp} />
+  ));
   return (
-    <div className="App">
+    <div className="comment-card">
       <Card style={{ width: "30rem" }}>
         <Card.Body>
-          <Card.Title>{handleOnChange}</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+          <Card.Title>hello {props.name}</Card.Title>
+          <Card.Text>{props.text}</Card.Text>
 
-          <Button variant="light" type="submit">
+          <Button variant="light" type="button">
             &#11165;
           </Button>
           <span>213</span>
-          <Button variant="light" type="submit">
+          <Button variant="light" type="button">
             &#11167;
           </Button>
+          {props.depth < 3 && (
+            <Button variant="light" type="button">
+              reply
+            </Button>
+          )}
+          {temp < 3 && (
+            <Comment
+              name={props.name + " depth " + temp}
+              text={props.text}
+              depth={temp}
+            />
+          )}
         </Card.Body>
       </Card>
     </div>

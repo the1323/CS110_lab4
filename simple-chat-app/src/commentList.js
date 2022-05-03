@@ -4,28 +4,49 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentBox from "./commentInput";
-
+import Comment from "./comment";
+var data = [
+  {
+    text: "Whatever the mind of man can conceive and believe, it can achieve.",
+    name: "Napoleon Hill",
+  },
+  {
+    text: "Strive not to be a success, but rather to be of value.",
+    name: "Albert Einstein",
+  },
+  {
+    text: "I attribute my success to this: I never gave or took any excuse.",
+    name: "Florence Nightingale",
+  },
+  {
+    text: "You miss 100% of the shots you don’t take.",
+    name: "Wayne Gretzky",
+  },
+];
 function Comments() {
+  const CommentData = data.map((each) => (
+    <Comment name={each.name} text={each.text} depth="0" />
+  ));
+  const addComment = (name, text) => {
+    console.log("new aaaaaaaaaaaaa");
+    var nc = { name: { name }, text: { text } };
+    data.push(nc);
+  };
   return (
-    <div className="App">
-      <CommentBox />
-      <Card style={{ width: "30rem" }}>
-        <Card.Body>
-          <Card.Title>name</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+    <div className="comment-list">
+      <div className="form">
+        <CommentBox
+          dataOut={(nameOut, textOut) => addComment(nameOut, textOut)}
+        />
+      </div>
+      <h3>Comments</h3>
 
-          <Button variant="light" type="submit">
-            &#11165;
-          </Button>
-          <span>213</span>
-          <Button variant="light" type="submit">
-            &#11167;
-          </Button>
-        </Card.Body>
-      </Card>
+      <Comment
+        name="sasa"
+        text="Some quickSome quickSome quickSome quick"
+        depth="0"
+      />
+      {CommentData}
     </div>
   );
 }

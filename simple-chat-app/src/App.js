@@ -9,7 +9,8 @@ function App() {
   return (
     <div className="App">
       <p>asdasd</p>
-      <CommentBox />
+
+      <Comments />
     </div>
   );
 }
