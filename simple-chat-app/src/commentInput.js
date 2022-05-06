@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -20,7 +20,7 @@ const CommentBox = ({ handleOnSubmit, submitLabel, depth, setHidden }) => {
 
   return (
     <div className="CommentBox" onSubmit={onSubmit}>
-      <Card style={{ width: "30rem" }}>
+      <Card style={{ width: "25rem" }}>
         <Card.Body>
           <Form id="comment-form">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

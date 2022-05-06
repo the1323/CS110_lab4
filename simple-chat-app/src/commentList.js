@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentBox from "./commentInput";
 import Comment from "./comment";
+import Card from "react-bootstrap/Card";
+
 var idCount = 0;
 const Comments = () => {
   const [commentData, setCommentData] = useState([]);
@@ -26,16 +25,18 @@ const Comments = () => {
         <b>New Post</b>
       </h5>
       <CommentBox depth="0" handleOnSubmit={addComment} />
-      <h5>Comments</h5>
-      {rootComments.map((rootComment) => (
-        <Comment
-          key={rootComment.id}
-          comment={rootComment}
-          addComment={addComment}
-          replies={getReplies(rootComment.id)}
-          getReplies={getReplies}
-        />
-      ))}
+      <Card style={{ width: "35rem" }}>
+        <h5>Comments</h5>
+        {rootComments.map((rootComment) => (
+          <Comment
+            key={rootComment.id}
+            comment={rootComment}
+            addComment={addComment}
+            replies={getReplies(rootComment.id)}
+            getReplies={getReplies}
+          />
+        ))}
+      </Card>
     </div>
   );
 };

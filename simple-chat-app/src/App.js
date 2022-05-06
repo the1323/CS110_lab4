@@ -1,15 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import CommentBox from "./commentInput";
+import React from "react";
+
 import Comments from "./commentList";
-import Comment from "./comment";
 
 function App() {
   return (
     <div className="App">
-      <p>asdasd</p>
-
       <Comments />
     </div>
   );
