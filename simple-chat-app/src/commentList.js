@@ -5,49 +5,63 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentBox from "./commentInput";
 import Comment from "./comment";
-var data = [
-  {
-    text: "Whatever the mind of man can conceive and believe, it can achieve.",
-    name: "Napoleon Hill",
-  },
-  {
-    text: "Strive not to be a success, but rather to be of value.",
-    name: "Albert Einstein",
-  },
-  {
-    text: "I attribute my success to this: I never gave or took any excuse.",
-    name: "Florence Nightingale",
-  },
-  {
-    text: "You miss 100% of the shots you don’t take.",
-    name: "Wayne Gretzky",
-  },
-];
-function Comments() {
-  const CommentData = data.map((each) => (
-    <Comment name={each.name} text={each.text} depth="0" />
-  ));
-  const addComment = (name, text) => {
-    console.log("new aaaaaaaaaaaaa");
-    var nc = { name: { name }, text: { text } };
-    data.push(nc);
+var idCount = 0;
+const Comments = () => {
+  const [commentData, setCommentData] = useState([]);
+  const rootComments = commentData.filter(
+    (commentData) => commentData.depth === 0
+  );
+  const addComment = (name, text, depth, parentId) => {
+    createComment(name, text, parentId, depth).then((c) => {
+      setCommentData([c, ...commentData]);
+    });
   };
+
+  const getReplies = (Id) =>
+    commentData.filter((commentData) => commentData.parentId === Id);
+
   return (
     <div className="comment-list">
-      <div className="form">
-        <CommentBox
-          dataOut={(nameOut, textOut) => addComment(nameOut, textOut)}
+      <h5 className="form-title">
+        <b>New Post</b>
+      </h5>
+      <CommentBox depth="0" handleOnSubmit={addComment} />
+      <h5>Comments</h5>
+      {rootComments.map((rootComment) => (
+        <Comment
+          key={rootComment.id}
+          comment={rootComment}
+          addComment={addComment}
+          replies={getReplies(rootComment.id)}
+          getReplies={getReplies}
         />
-      </div>
-      <h3>Comments</h3>
-
-      <Comment
-        name="sasa"
-        text="Some quickSome quickSome quickSome quick"
-        depth="0"
-      />
-      {CommentData}
+      ))}
     </div>
   );
-}
+};
+
+export const createComment = async (name, text, parentId, depth) => {
+  idCount += 1;
+  const pid = parentId !== undefined ? parentId : null;
+  console.log(
+    "add name: " +
+      name +
+      " depth: " +
+      depth +
+      " text: " +
+      text +
+      " ParentId: " +
+      pid +
+      " id: " +
+      idCount
+  );
+
+  return {
+    id: idCount,
+    depth: depth,
+    name: name,
+    text: text,
+    parentId: pid,
+  };
+};
 export default Comments;

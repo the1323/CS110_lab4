@@ -4,28 +4,25 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function CommentBox({ nameOut, textOut }) {
+const CommentBox = ({ handleOnSubmit, submitLabel, depth, setHidden }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
 
-  const handleOnSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log("commentBox " + name + " " + text);
-    var nc = { name: { name }, text: { text } };
-    nameOut(name);
-    textOut(text);
+    console.log("commentBox " + name + " " + text + " " + Number(depth));
+    handleOnSubmit(name, text, Number(depth));
     setName("");
     setText("");
+    document.getElementById("comment-form").reset();
+    setHidden(true);
   };
 
   return (
-    <div className="CommentBox">
+    <div className="CommentBox" onSubmit={onSubmit}>
       <Card style={{ width: "30rem" }}>
         <Card.Body>
-          <Card.Title>
-            <b>New Post</b>
-          </Card.Title>
-          <Form>
+          <Form id="comment-form">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Control
                 type="name"
@@ -41,7 +38,7 @@ function CommentBox({ nameOut, textOut }) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                name="content"
+                name="text"
                 placeholder="Write a new post..."
                 onChange={(e) => setText(e.target.value)}
               />
@@ -49,8 +46,8 @@ function CommentBox({ nameOut, textOut }) {
 
             <Button
               variant="primary"
-              type="button"
-              onClick={() => handleOnSubmit()}
+              type="submit"
+              disabled={text.length < 1 || name.length < 1}
             >
               Submit
             </Button>
@@ -59,5 +56,5 @@ function CommentBox({ nameOut, textOut }) {
       </Card>
     </div>
   );
-}
+};
 export default CommentBox;
